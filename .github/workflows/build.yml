@@ -1,0 +1,253 @@
+name: Build Praat (Japanese)
+
+# upstream の Praat ソースに翻訳パッチを当ててから3プラットフォームでビルドする。
+# upstream は submodule で管理し、本リポジトリには翻訳辞書とスクリプトのみが入る。
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    # 週1で upstream の新版をビルドし直す
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  # -----------------------------------------------------------
+  # 翻訳適用 & 整合性チェック (全ビルドの前段)
+  # -----------------------------------------------------------
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      praat_sha: ${{ steps.upstream.outputs.sha }}
+      praat_tag: ${{ steps.upstream.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Resolve upstream Praat version
+        id: upstream
+        run: |
+          cd upstream
+          SHA=$(git rev-parse HEAD)
+          TAG=$(git describe --tags --exact-match 2>/dev/null || git describe --tags --abbrev=0 2>/dev/null || echo "unknown")
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Using upstream Praat $TAG (SHA $SHA)"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python deps
+        run: pip install pyyaml
+
+      - name: Apply translations
+        run: |
+          python3 scripts/apply_translations.py \
+            --upstream upstream \
+            --translations translations \
+            --verbose
+
+      - name: Upload patched upstream
+        uses: actions/upload-artifact@v4
+        with:
+          name: patched-upstream
+          path: upstream/
+          retention-days: 1
+
+  # -----------------------------------------------------------
+  # Linux ビルド
+  # -----------------------------------------------------------
+  build-linux:
+    needs: prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download patched upstream
+        uses: actions/download-artifact@v4
+        with:
+          name: patched-upstream
+          path: upstream/
+
+      - name: Install build deps
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential pkg-config \
+            libgtk-3-dev libpulse-dev libasound2-dev libjack-jackd2-dev
+
+      - name: Configure Linux makefile
+        run: |
+          cd upstream
+          cp makefiles/makefile.defs.linux.pulse makefile.defs
+
+      - name: Build Praat (Linux)
+        run: |
+          cd upstream
+          make -j$(nproc) PRAAT_ARCH=x64v3 PRAAT_COMPILER=gcc
+
+      - name: Verify Japanese strings in binary
+        run: |
+          cd upstream
+          # 日本語文字列がバイナリに含まれているかざっくり確認
+          if strings praat 2>/dev/null | grep -E '開く|設定|ウィンドウ' >/dev/null; then
+            echo "✅ 日本語文字列がバイナリに含まれています"
+          else
+            echo "⚠️ 日本語文字列がバイナリ内に検出できませんでした (UTF-16/32 の可能性)"
+          fi
+
+      - name: Package Linux build
+        run: |
+          cd upstream
+          mkdir -p ../dist
+          tar -czf ../dist/praat-ja-linux-x64.tar.gz praat
+          ls -lh ../dist/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: praat-ja-linux
+          path: dist/praat-ja-linux-x64.tar.gz
+
+  # -----------------------------------------------------------
+  # Windows ビルド (MSYS2 + Clang64)
+  # -----------------------------------------------------------
+  build-windows:
+    needs: prepare
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download patched upstream
+        uses: actions/download-artifact@v4
+        with:
+          name: patched-upstream
+          path: upstream/
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: CLANG64
+          update: true
+          install: >-
+            make
+            mingw-w64-clang-x86_64-clang
+            mingw-w64-clang-x86_64-pkg-config
+
+      - name: Configure Windows makefile
+        run: |
+          cd upstream
+          cp makefiles/makefile.defs.mingw64 makefile.defs
+
+      - name: Build Praat (Windows)
+        run: |
+          cd upstream
+          make PRAAT_ARCH=x64v3 -j$(nproc) || make PRAAT_ARCH=x64v3 -j1
+
+      - name: Package Windows build
+        run: |
+          cd upstream
+          mkdir -p ../dist
+          cp Praat.exe ../dist/Praat-ja.exe || cp praat.exe ../dist/Praat-ja.exe
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: praat-ja-windows
+          path: dist/Praat-ja.exe
+
+  # -----------------------------------------------------------
+  # macOS ビルド (Xcode)
+  # -----------------------------------------------------------
+  build-macos:
+    needs: prepare
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download patched upstream
+        uses: actions/download-artifact@v4
+        with:
+          name: patched-upstream
+          path: upstream/
+
+      - name: Show Xcode version
+        run: |
+          xcodebuild -version
+          ls /Applications | grep -i xcode || true
+
+      - name: Build Praat (macOS)
+        run: |
+          cd upstream
+          xcodebuild \
+            -project main/macos/praat.xcodeproj \
+            -scheme praat_mac \
+            -configuration Release \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            -derivedDataPath build/ \
+            build || true
+          # フォールバック: ターゲット名が違う場合に備えて -list で確認
+          if [ ! -d "build/Build/Products/Release" ]; then
+            echo "ビルド先が見つからないので利用可能スキームを表示:"
+            xcodebuild -project main/macos/praat.xcodeproj -list || true
+            exit 1
+          fi
+
+      - name: Package macOS build
+        run: |
+          cd upstream
+          mkdir -p ../dist
+          # .app バンドルを探して圧縮
+          APP=$(find build -name "*.app" -maxdepth 5 | head -1)
+          if [ -z "$APP" ]; then
+            echo "Praat.app が見つかりません"
+            exit 1
+          fi
+          mv "$APP" "../dist/Praat-ja.app"
+          cd ../dist
+          zip -ry praat-ja-macos.zip Praat-ja.app
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: praat-ja-macos
+          path: dist/praat-ja-macos.zip
+
+  # -----------------------------------------------------------
+  # リリース (タグ push 時のみ)
+  # -----------------------------------------------------------
+  release:
+    needs: [build-linux, build-windows, build-macos]
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist/
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/praat-ja-linux/praat-ja-linux-x64.tar.gz
+            dist/praat-ja-windows/Praat-ja.exe
+            dist/praat-ja-macos/praat-ja-macos.zip
+          body: |
+            ## 非公式 Praat 日本語化版
+
+            ⚠️ これは Praat の **非公式** 日本語化フォークです。
+            公式 Praat (Paul Boersma 他, アムステルダム大学) とは無関係です。
+
+            - upstream: ${{ needs.prepare.outputs.praat_tag }}
+            - ライセンス: GPL v3 (派生物として継承)
+            - ソースコード: <https://github.com/labphonlab/praat-ja-fork>
