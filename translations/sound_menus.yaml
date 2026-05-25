@@ -1,0 +1,1817 @@
+'   and may not work at all on your computer.':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+'   because its behaviour is platform-dependent.':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+'   loss rate (/sec)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+'   replenishment rate (/sec)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+'   reprocessing rate (/sec)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+'   return rate (/sec)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+'   self [col] = ...':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+'   to work on all computers.':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+'   x = x + dx':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+'# `x` is the time in seconds, `col` is the sample number.':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+'(uses Sound-to-Spectrum and Spectrum-to-Sound): x is frequency in hertz':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+-- create sound advanced --:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+-- read sound --:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+-- sound goodies --:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+-- sound settings --:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+'11025':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - OPTION
+'16000':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - OPTION
+'22050':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - OPTION
+'32000':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - OPTION
+'44100':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - OPTION
+'48000':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - OPTION
+'8000':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - OPTION
+'96000':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - OPTION
+All tier names:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - SENTENCE
+Amplitude (Pa):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Attenuation at top:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Balance (0-1):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Band smoothing (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Bandwidth (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Between parentheses, you find what you can do simultaneously.:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+Buffer size (MB):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - NATURAL
+Ceiling (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Column name:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - SENTENCE
+Create Sound as pure tone:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Create Sound as pure tone...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Create Sound as tone complex:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Create Sound as tone complex... || Create Sound from tone complex...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Create Sound from formula:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Create Sound from formula...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Create Sound...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Create mono Sound:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Cross-correlate (short):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Decrease asynchronicity if sound plays with discontinuities.:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+Deepen band modulation:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Duration (seconds):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+End time (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Enhancement (dB):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Factor:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Fade-in duration (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Fade-out duration (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Fast:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+Fast modulation (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Finding a path...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+Finding the candidates...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+First frequency (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Formant ceiling (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Forward-masking time (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Frequency (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Frequency resolution (Bark):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Frequency step (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Frequency-domain filtering with a formula:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+From channel:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - NATURAL
+From frequency (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+  - REAL
+From lag (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+From time:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Gain (0-1):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Garnish:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+Get sample number from time:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Get time from sample number:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Get zeroes:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Has synapse:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+How to find a path through the candidates...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - HEADING
+How to find the candidates...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - HEADING
+How to preprocess the sound...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - HEADING
+Include fallers:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+Include maxima:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+Include minima:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+Include raisers:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+Input size (number of samples):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - NATURAL
+Input source:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - CHOICE
+LongSound settings:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+LongSound settings... || LongSound preferences...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+'LongSound: Extract part':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'LongSound: Get sample index from time':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'LongSound: Get time from sample index':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'LongSound: Play part':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'LongSound: Save part as audio file':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'LongSound: To TextGrid...':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Longest period (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Max. number of candidates:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - NATURAL
+Max. number of formants:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Maximum frequency (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Maximum period factor:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Maximum viewable part (seconds):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - NATURAL
+Meddis synapse properties:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+Min. non-speech interval (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Min. speech interval (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Minimum frequency (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Multiplication factor:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Name:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - WORD
+New:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+New absolute peak:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+New average intensity (dB SPL):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+New sampling frequency (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+New value:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Non-speech interval label:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - WORD
+Normalize:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+'Note: this setting works for the next long sound file that you open,':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+Number:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Number of components:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - INTEGER
+Number of formants:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Number of patterns:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - NATURAL
+Octave cost:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Octave-jump cost:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Open long sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_READ
+Open long sound file...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Output size (number of classes):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - NATURAL
+Overlap (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Padding around speech segments (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Periods per window:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Pitch ceiling (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Pitch floor (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Point tiers:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - SENTENCE
+Pre-emphasis from (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Precision (samples):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - NATURAL
+Preserve times:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+Read Sound from raw Alaw file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_READ
+Read Sound from raw Alaw file...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Read from special sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Read separate channels from sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_READ
+Read separate channels from sound file... || Read two Sounds from stereo file...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Record Sound:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Record Sound (fixed time)...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Record mono Sound...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Record stereo Sound...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Relative width:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Report sound server properties:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Sample index:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - INTEGER
+Sample number:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - INTEGER
+  - NATURAL
+Sampling frequency (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+  - REAL
+Save as 24-bit WAV file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as 32-bit WAV file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as AIFC file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as AIFF file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as FLAC file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as Kay sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as NIST file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as NeXT/Sun file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as Sesam file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as WAV file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as raw 16-bit big-endian sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as raw 16-bit little-endian sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as raw 24-bit big-endian sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as raw 24-bit little-endian sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as raw 32-bit big-endian sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as raw 32-bit little-endian sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as raw 8-bit signed sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as raw 8-bit unsigned sound file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as stereo AIFC file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as stereo AIFF file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as stereo FLAC file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as stereo NIST file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as stereo NeXT/Sun file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save as stereo WAV file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save left channel as AIFC file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save left channel as AIFF file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save left channel as FLAC file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save left channel as NIST file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save left channel as NeXT/Sun file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save left channel as WAV file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save right channel as AIFC file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save right channel as AIFF file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save right channel as FLAC file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save right channel as NIST file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save right channel as NeXT/Sun file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Save right channel as WAV file:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM_SAVE
+Shortest period (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Silence after (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Silence before (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Silence threshold:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Slow modulation (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Smoothing (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Sound:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Sound playing settings:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Sound playing settings... || Sound playing preferences...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Sound recording settings:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Sound recording settings... || Sound recording preferences...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+'Sound: Add':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: De-emphasize (in-place)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Draw':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Extract channel':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Extract channels':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Extract part':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Extract part for overlap':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Filter (de-emphasis)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Filter (formula)...':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Filter (one formant)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Filter (pass Hann band)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Filter (pre-emphasis)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Filter (stop Hann band)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Filter with one formant (in-place)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Formula':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Formula (part)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get absolute extremum':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get energy':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get maximum':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get mean':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get minimum':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get nearest zero crossing':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get power':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get root-mean-square':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get standard deviation':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get time of maximum':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get time of minimum':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get value at sample number':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Get value at time':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Lengthen (overlap-add)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Multiply':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Multiply by window':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Override sampling frequency':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Pre-emphasize (in-place)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Resample':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Scale intensity':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Scale peak':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Set part to zero':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: Set value at sample number':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Cochleagram':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Cochleagram (De Boer, Meddis & Hewitt)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Formant (Burg method)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Formant (keep all)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Formant (split Levinson (Willems))':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Harmonicity (ac)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Harmonicity (cc)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Harmonicity (gne)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Intensity':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To IntensityTier':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Ltas (pitch-corrected)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Manipulation':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Pitch':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Pitch (ac)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Pitch (cc)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Pitch (filtered autocorrelation)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Pitch (filtered cross-correlation)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Pitch (raw autocorrelation)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Pitch (raw cross-correlation)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To PointProcess (extrema)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To PointProcess (periodic, cc)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To PointProcess (periodic, peaks)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Spectrogram':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To Spectrum':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To TextGrid':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To TextGrid (speech activity, Silero)':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: To long-term average spectrum':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sound: autocorrelate':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'SoundSet & Table: Get randomized patterns':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sounds: Concatenate with overlap':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sounds: Convolve':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+'Sounds: Cross-correlate':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - FORM
+Speech interval label:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - WORD
+Speech probability threshold (0-1):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Start time (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Step (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Stop playing sound:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - praat_addMenuCommand
+Subtract mean:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+The LongSound window can become very slow if you set it too high.:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+The combination of “microphone” and “48000 Hz” is likely:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+The following determines how sounds are played.:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+'The following number will be added to the amplitudes of ':
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+The “Gain” and “Balance” settings tend to be obsolete:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+This menu command is usually hidden,:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+This setting determines the maximum number of seconds:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+Tier names:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - SENTENCE
+Time (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Time step (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+  - REAL
+To channel:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - NATURAL
+To frequency (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+  - REAL
+To lag (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+To time:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Tone frequency (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+Type:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - CHOICE
+Very accurate:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - BOOLEAN
+Voiced / unvoiced cost:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Voicing threshold:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+Where to search...:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - HEADING
+Which of these are point tiers?:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - SENTENCE
+Window length (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+all samples of the sound.:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+at exactly these times:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - OPTION
+at nearest zero crossing:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - OPTION
+for col from 1 to ncol:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+for viewing the waveform and playing a sound in the LongSound window.:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+left Amplitude range:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+left Pitch floor and ceiling (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+left Pitch floor and top (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+left Time range (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+not for currently existing LongSound objects.:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT
+right Amplitude range:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+right Pitch floor and ceiling (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+right Pitch floor and top (Hz):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - POSITIVE
+right Time range:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+right Time range (s):
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - REAL
+x = x1   ! time associated with first sample:
+  files:
+  - praat_Sound.cpp
+  ja: ''
+  macros:
+  - COMMENT

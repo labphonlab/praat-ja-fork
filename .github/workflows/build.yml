@@ -1,7 +1,6 @@
 name: Build Praat (Japanese)
 
 # upstream の Praat ソースに翻訳パッチを当ててから3プラットフォームでビルドする。
-# upstream は submodule で管理し、本リポジトリには翻訳辞書とスクリプトのみが入る。
 
 on:
   push:
@@ -11,7 +10,6 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    # 週1で upstream の新版をビルドし直す
     - cron: '0 6 * * 1'
 
 permissions:
@@ -19,7 +17,7 @@ permissions:
 
 jobs:
   # -----------------------------------------------------------
-  # 翻訳適用 & 整合性チェック (全ビルドの前段)
+  # 翻訳適用 (全ビルドの前段)
   # -----------------------------------------------------------
   prepare:
     runs-on: ubuntu-latest
@@ -39,21 +37,18 @@ jobs:
           TAG=$(git describe --tags --exact-match 2>/dev/null || git describe --tags --abbrev=0 2>/dev/null || echo "unknown")
           echo "sha=$SHA" >> "$GITHUB_OUTPUT"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
-          echo "Using upstream Praat $TAG (SHA $SHA)"
 
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install Python deps
-        run: pip install pyyaml
+      - run: pip install pyyaml
 
       - name: Apply translations
         run: |
           python3 scripts/apply_translations.py \
             --upstream upstream \
-            --translations translations \
-            --verbose
+            --translations translations
 
       - name: Upload patched upstream
         uses: actions/upload-artifact@v4
@@ -61,18 +56,16 @@ jobs:
           name: patched-upstream
           path: upstream/
           retention-days: 1
+          include-hidden-files: true
 
   # -----------------------------------------------------------
-  # Linux ビルド
+  # Linux ビルド  (top-level Makefile に任せる)
   # -----------------------------------------------------------
   build-linux:
     needs: prepare
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Download patched upstream
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: patched-upstream
           path: upstream/
@@ -84,32 +77,40 @@ jobs:
             build-essential pkg-config \
             libgtk-3-dev libpulse-dev libasound2-dev libjack-jackd2-dev
 
-      - name: Configure Linux makefile
+      - name: Build Praat (Linux x64v3)
         run: |
           cd upstream
-          cp makefiles/makefile.defs.linux.pulse makefile.defs
+          make PRAAT_OS=linux PRAAT_ARCH=x64v3 -j$(nproc) 2>&1 | tail -200 || (
+            echo "==> Detailed build failure, last 400 lines:"
+            make PRAAT_OS=linux PRAAT_ARCH=x64v3 -j1 2>&1 | tail -400
+            exit 1
+          )
 
-      - name: Build Praat (Linux)
+      - name: Locate praat binary
+        id: find_bin
         run: |
           cd upstream
-          make -j$(nproc) PRAAT_ARCH=x64v3 PRAAT_COMPILER=gcc
+          BIN=$(find . -maxdepth 3 -name "praat" -type f -perm -u+x | head -1)
+          if [ -z "$BIN" ]; then
+            echo "praat binary not found"; exit 1
+          fi
+          echo "path=$BIN" >> "$GITHUB_OUTPUT"
+          ls -lh "$BIN"
 
       - name: Verify Japanese strings in binary
         run: |
-          cd upstream
-          # 日本語文字列がバイナリに含まれているかざっくり確認
-          if strings praat 2>/dev/null | grep -E '開く|設定|ウィンドウ' >/dev/null; then
-            echo "✅ 日本語文字列がバイナリに含まれています"
+          BIN="upstream/${{ steps.find_bin.outputs.path }}"
+          if strings "$BIN" 2>/dev/null | grep -E '開く|設定|ウィンドウ' >/dev/null; then
+            echo "✅ Japanese strings present in binary"
           else
-            echo "⚠️ 日本語文字列がバイナリ内に検出できませんでした (UTF-16/32 の可能性)"
+            echo "⚠️ Japanese strings not found by 'strings' (may be UTF-16/32 encoded)"
           fi
 
-      - name: Package Linux build
+      - name: Package
         run: |
-          cd upstream
-          mkdir -p ../dist
-          tar -czf ../dist/praat-ja-linux-x64.tar.gz praat
-          ls -lh ../dist/
+          mkdir -p dist
+          tar -czf dist/praat-ja-linux-x64.tar.gz -C upstream "${{ steps.find_bin.outputs.path }}"
+          ls -lh dist/
 
       - uses: actions/upload-artifact@v4
         with:
@@ -117,7 +118,7 @@ jobs:
           path: dist/praat-ja-linux-x64.tar.gz
 
   # -----------------------------------------------------------
-  # Windows ビルド (MSYS2 + Clang64)
+  # Windows ビルド (MSYS2 + CLANG64)
   # -----------------------------------------------------------
   build-windows:
     needs: prepare
@@ -126,10 +127,7 @@ jobs:
       run:
         shell: msys2 {0}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Download patched upstream
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: patched-upstream
           path: upstream/
@@ -141,24 +139,34 @@ jobs:
           update: true
           install: >-
             make
+            pkg-config
             mingw-w64-clang-x86_64-clang
-            mingw-w64-clang-x86_64-pkg-config
+            mingw-w64-clang-x86_64-pkgconf
 
-      - name: Configure Windows makefile
+      - name: Build Praat (Windows x64v3)
         run: |
           cd upstream
-          cp makefiles/makefile.defs.mingw64 makefile.defs
+          make PRAAT_OS=windows PRAAT_ARCH=x64v3 -j$(nproc) 2>&1 | tail -200 || (
+            echo "==> Detailed build failure, last 400 lines:"
+            make PRAAT_OS=windows PRAAT_ARCH=x64v3 -j1 2>&1 | tail -400
+            exit 1
+          )
 
-      - name: Build Praat (Windows)
+      - name: Locate Praat.exe
+        id: find_bin
         run: |
           cd upstream
-          make PRAAT_ARCH=x64v3 -j$(nproc) || make PRAAT_ARCH=x64v3 -j1
+          BIN=$(find . -maxdepth 3 -iname "praat*.exe" | head -1)
+          if [ -z "$BIN" ]; then
+            echo "Praat.exe not found"; exit 1
+          fi
+          echo "path=$BIN" >> "$GITHUB_OUTPUT"
 
-      - name: Package Windows build
+      - name: Package
         run: |
-          cd upstream
-          mkdir -p ../dist
-          cp Praat.exe ../dist/Praat-ja.exe || cp praat.exe ../dist/Praat-ja.exe
+          mkdir -p dist
+          cp "upstream/${{ steps.find_bin.outputs.path }}" dist/Praat-ja.exe
+          ls -lh dist/
 
       - uses: actions/upload-artifact@v4
         with:
@@ -166,57 +174,76 @@ jobs:
           path: dist/Praat-ja.exe
 
   # -----------------------------------------------------------
-  # macOS ビルド (Xcode)
+  # macOS ビルド
+  # Xcode プロジェクトは source repo に無いので、最新リリースの
+  # praatXXXX_xcodeproj.zip を取得して source tree に展開してから build.
   # -----------------------------------------------------------
   build-macos:
     needs: prepare
     runs-on: macos-14
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Download patched upstream
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
           name: patched-upstream
           path: upstream/
 
       - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Fetch xcodeproj.zip from latest Praat release
+        id: fetch_xcode
         run: |
-          xcodebuild -version
-          ls /Applications | grep -i xcode || true
+          # 最新リリースから xcodeproj.zip の URL を取得
+          API="https://api.github.com/repos/praat/praat.github.io/releases/latest"
+          URL=$(curl -fsSL "$API" | python3 -c "
+          import json, sys
+          data = json.load(sys.stdin)
+          for a in data.get('assets', []):
+              if 'xcodeproj' in a['name'] and a['name'].endswith('.zip'):
+                  print(a['browser_download_url']); break
+          ")
+          echo "Downloading: $URL"
+          curl -fsSL -o xcodeproj.zip "$URL"
+          # source tree に展開 (upstream/ の中に praat.xcodeproj が出来る)
+          unzip -q xcodeproj.zip -d upstream/
+          ls -la upstream/ | head -20
+          # xcodeproj の場所を特定
+          PROJ=$(find upstream -maxdepth 3 -name "*.xcodeproj" -type d | head -1)
+          if [ -z "$PROJ" ]; then
+            echo "xcodeproj not found after extraction"
+            find upstream -maxdepth 3 -type d | head -20
+            exit 1
+          fi
+          echo "proj=$PROJ" >> "$GITHUB_OUTPUT"
+          echo "Found: $PROJ"
+
+      - name: List Xcode schemes
+        run: |
+          xcodebuild -project "${{ steps.fetch_xcode.outputs.proj }}" -list
 
       - name: Build Praat (macOS)
         run: |
-          cd upstream
           xcodebuild \
-            -project main/macos/praat.xcodeproj \
+            -project "${{ steps.fetch_xcode.outputs.proj }}" \
             -scheme praat_mac \
             -configuration Release \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGNING_ALLOWED=NO \
             -derivedDataPath build/ \
-            build || true
-          # フォールバック: ターゲット名が違う場合に備えて -list で確認
-          if [ ! -d "build/Build/Products/Release" ]; then
-            echo "ビルド先が見つからないので利用可能スキームを表示:"
-            xcodebuild -project main/macos/praat.xcodeproj -list || true
-            exit 1
-          fi
+            build 2>&1 | tail -200
 
-      - name: Package macOS build
+      - name: Package
         run: |
-          cd upstream
-          mkdir -p ../dist
-          # .app バンドルを探して圧縮
-          APP=$(find build -name "*.app" -maxdepth 5 | head -1)
+          mkdir -p dist
+          APP=$(find build -name "*.app" -maxdepth 6 | head -1)
           if [ -z "$APP" ]; then
-            echo "Praat.app が見つかりません"
+            echo "Praat.app not found"
+            find build -maxdepth 6 -name "*.app" -o -name "praat*" | head -20
             exit 1
           fi
-          mv "$APP" "../dist/Praat-ja.app"
-          cd ../dist
-          zip -ry praat-ja-macos.zip Praat-ja.app
+          mv "$APP" "dist/Praat-ja.app"
+          cd dist && zip -ry praat-ja-macos.zip Praat-ja.app
 
       - uses: actions/upload-artifact@v4
         with:
@@ -235,8 +262,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: dist/
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v2
         with:
           files: |
             dist/praat-ja-linux/praat-ja-linux-x64.tar.gz
