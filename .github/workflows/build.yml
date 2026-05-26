@@ -208,9 +208,17 @@ jobs:
 
       - name: Fetch xcodeproj.zip from latest Praat release
         id: fetch_xcode
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # GitHub API は匿名だと共有IPでレート制限に当たりやすいので
+          # ワークフロー内蔵のトークンを付けて 403 を回避する。
           API="https://api.github.com/repos/praat/praat.github.io/releases/latest"
-          URL=$(curl -fsSL "$API" | python3 -c "
+          URL=$(curl -fsSL \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              "$API" | python3 -c "
           import json, sys
           data = json.load(sys.stdin)
           for a in data.get('assets', []):
