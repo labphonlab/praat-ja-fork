@@ -177,23 +177,38 @@ jobs:
   # macOS ビルド
   # Xcode プロジェクトは source repo に無いので、最新リリースの
   # praatXXXX_xcodeproj.zip を取得して source tree に展開してから build.
+  # 試行錯誤中なので、失敗しても他ジョブをブロックしないよう
+  # continue-on-error にしている。
   # -----------------------------------------------------------
   build-macos:
     needs: prepare
     runs-on: macos-14
+    continue-on-error: true
     steps:
       - uses: actions/download-artifact@v4
         with:
           name: patched-upstream
           path: upstream/
 
-      - name: Show Xcode version
-        run: xcodebuild -version
+      - name: Show environment
+        run: |
+          xcodebuild -version
+          xcode-select -p
+          ls /Applications/ | grep -i xcode || true
+          sw_vers
+          uname -a
+
+      - name: Verify upstream source tree
+        run: |
+          echo "==> upstream/ contents:"
+          ls -la upstream/ | head -30
+          echo ""
+          echo "==> Sanity check (sys/, fon/, main/ should exist):"
+          ls -ld upstream/sys upstream/fon upstream/main 2>&1 || true
 
       - name: Fetch xcodeproj.zip from latest Praat release
         id: fetch_xcode
         run: |
-          # 最新リリースから xcodeproj.zip の URL を取得
           API="https://api.github.com/repos/praat/praat.github.io/releases/latest"
           URL=$(curl -fsSL "$API" | python3 -c "
           import json, sys
@@ -202,45 +217,80 @@ jobs:
               if 'xcodeproj' in a['name'] and a['name'].endswith('.zip'):
                   print(a['browser_download_url']); break
           ")
+          if [ -z "$URL" ]; then
+            echo "Could not find xcodeproj asset URL"; exit 1
+          fi
           echo "Downloading: $URL"
           curl -fsSL -o xcodeproj.zip "$URL"
-          # source tree に展開 (upstream/ の中に praat.xcodeproj が出来る)
-          unzip -q xcodeproj.zip -d upstream/
-          ls -la upstream/ | head -20
-          # xcodeproj の場所を特定
-          PROJ=$(find upstream -maxdepth 3 -name "*.xcodeproj" -type d | head -1)
+          ls -lh xcodeproj.zip
+          echo ""
+          echo "==> Zip contents:"
+          unzip -l xcodeproj.zip | head -30
+          echo ""
+          echo "==> Extracting into upstream/ ..."
+          unzip -o -q xcodeproj.zip -d upstream/
+          echo ""
+          echo "==> upstream/ after extract:"
+          ls -la upstream/ | head -30
+          echo ""
+          echo "==> Searching for .xcodeproj anywhere:"
+          find upstream -maxdepth 4 -name "*.xcodeproj" -type d
+          PROJ=$(find upstream -maxdepth 4 -name "*.xcodeproj" -type d | head -1)
           if [ -z "$PROJ" ]; then
-            echo "xcodeproj not found after extraction"
-            find upstream -maxdepth 3 -type d | head -20
+            echo "ERROR: xcodeproj not found after extraction"
+            echo "==> Top-level directories within upstream:"
+            find upstream -maxdepth 2 -type d | head -30
             exit 1
           fi
           echo "proj=$PROJ" >> "$GITHUB_OUTPUT"
-          echo "Found: $PROJ"
+          echo "==> Using project: $PROJ"
 
-      - name: List Xcode schemes
+      - name: Inspect Xcode project
         run: |
-          xcodebuild -project "${{ steps.fetch_xcode.outputs.proj }}" -list
+          PROJ="${{ steps.fetch_xcode.outputs.proj }}"
+          echo "==> Project dir contents:"
+          ls -la "$PROJ" | head
+          echo ""
+          echo "==> xcodebuild -list:"
+          xcodebuild -project "$PROJ" -list
 
-      - name: Build Praat (macOS)
+      - name: Build Praat (macOS) — try praat_mac first, then fallbacks
         run: |
-          xcodebuild \
-            -project "${{ steps.fetch_xcode.outputs.proj }}" \
-            -scheme praat_mac \
-            -configuration Release \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO \
-            -derivedDataPath build/ \
-            build 2>&1 | tail -200
+          PROJ="${{ steps.fetch_xcode.outputs.proj }}"
+          for SCHEME in praat_mac praat Praat; do
+            echo ""
+            echo "================================================"
+            echo "Attempt: -scheme $SCHEME"
+            echo "================================================"
+            if xcodebuild \
+                -project "$PROJ" \
+                -scheme "$SCHEME" \
+                -configuration Release \
+                CODE_SIGN_IDENTITY="" \
+                CODE_SIGNING_REQUIRED=NO \
+                CODE_SIGNING_ALLOWED=NO \
+                -derivedDataPath build/ \
+                build 2>&1 | tail -200; then
+              echo "==> Build succeeded with scheme: $SCHEME"
+              break
+            else
+              echo "==> Build failed with scheme: $SCHEME, trying next..."
+            fi
+          done
+          # 成果物が存在するか確認
+          APP=$(find build -name "*.app" -maxdepth 6 2>/dev/null | head -1)
+          if [ -z "$APP" ]; then
+            echo "ERROR: No .app produced by any scheme"
+            exit 1
+          fi
+          echo "Built: $APP"
 
       - name: Package
         run: |
           mkdir -p dist
           APP=$(find build -name "*.app" -maxdepth 6 | head -1)
           if [ -z "$APP" ]; then
-            echo "Praat.app not found"
-            find build -maxdepth 6 -name "*.app" -o -name "praat*" | head -20
-            exit 1
+            echo "No .app found"; exit 1
           fi
           mv "$APP" "dist/Praat-ja.app"
           cd dist && zip -ry praat-ja-macos.zip Praat-ja.app
@@ -249,12 +299,14 @@ jobs:
         with:
           name: praat-ja-macos
           path: dist/praat-ja-macos.zip
+          if-no-files-found: warn
 
   # -----------------------------------------------------------
   # リリース (タグ push 時のみ)
+  # macOS は continue-on-error なので、無くてもリリースは作れる。
   # -----------------------------------------------------------
   release:
-    needs: [build-linux, build-windows, build-macos]
+    needs: [build-linux, build-windows]
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v')
     steps:
@@ -262,8 +314,11 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: dist/
+      - name: List downloaded artifacts
+        run: ls -R dist/
       - uses: softprops/action-gh-release@v2
         with:
+          fail_on_unmatched_files: false
           files: |
             dist/praat-ja-linux/praat-ja-linux-x64.tar.gz
             dist/praat-ja-windows/Praat-ja.exe
