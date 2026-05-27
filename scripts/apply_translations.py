@@ -155,16 +155,31 @@ def main() -> int:
     if args.files:
         target_files = [upstream / f for f in args.files]
     else:
-        # 辞書から files: フィールドを集めて推定
+        # 辞書から files: フィールドを集めて推定する。
+        # ただし「プレーンキー値形式」(menus.yaml など) は files が無く、
+        # その場合はファイル名 menus.yaml から推定して praat_objectMenus.cpp を
+        # デフォルト対象にする。これがないと dict 形式 YAML だけが優先されて
+        # 肝心のメインメニュー翻訳が抜け落ちる。
         target_set: set[str] = set()
         for yml in sorted(translations_dir.glob("*.yaml")):
             data = yaml.safe_load(yml.read_text(encoding="utf-8")) or {}
+            has_dict_entry = False
             for value in data.values():
                 if isinstance(value, dict):
+                    has_dict_entry = True
                     files = value.get("files") or []
                     for f in files:
                         target_set.add(f)
-        # ファイル名だけが入っている可能性が高いので upstream 内を検索
+            if not has_dict_entry:
+                # プレーンキー値形式 → ファイル名で推定
+                stem = yml.stem
+                if "menu" in stem or stem == "menus":
+                    target_set.add("praat_objectMenus.cpp")
+                elif "sound" in stem:
+                    target_set.add("praat_Sound.cpp")
+                else:
+                    target_set.add("praat_objectMenus.cpp")
+        # ファイル名で upstream 内を検索
         target_files = []
         for fname in sorted(target_set):
             matches = list(upstream.rglob(fname))
@@ -172,7 +187,7 @@ def main() -> int:
                 target_files.extend(matches)
 
         if not target_files:
-            # 既知の主要ファイルだけでもデフォルトで処理する
+            # 最終フォールバック
             default = upstream / "sys" / "praat_objectMenus.cpp"
             if default.exists():
                 target_files = [default]

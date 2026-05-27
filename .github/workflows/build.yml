@@ -46,9 +46,22 @@ jobs:
 
       - name: Apply translations
         run: |
+          # --files で対象を明示。指定しないと YAML の files: フィールドから推定するが、
+          # menus.yaml はプレーンキー値形式で files が無いので、誤って別ファイルだけが
+          # 拾われてしまうバグを避けるため明示する。
           python3 scripts/apply_translations.py \
             --upstream upstream \
-            --translations translations
+            --translations translations \
+            --files sys/praat_objectMenus.cpp
+
+      - name: Verify translations were applied
+        run: |
+          echo "==> Japanese string count in patched source:"
+          grep -c 'U"[^"]*[ぁ-んァ-ヶ一-龯][^"]*"' upstream/sys/praat_objectMenus.cpp || true
+          echo ""
+          echo "==> Sample of patched lines (first 10):"
+          grep -n '便利な機能\|詳細設定\|ウィンドウ\|メニューコマンドを追加\|マニュアル' \
+            upstream/sys/praat_objectMenus.cpp | head -10 || true
 
       - name: Upload patched upstream
         uses: actions/upload-artifact@v4
