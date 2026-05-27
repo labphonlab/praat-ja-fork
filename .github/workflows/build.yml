@@ -190,12 +190,17 @@ jobs:
   # macOS ビルド
   # Xcode プロジェクトは source repo に無いので、最新リリースの
   # praatXXXX_xcodeproj.zip を取得して source tree に展開してから build.
-  # 試行錯誤中なので、失敗しても他ジョブをブロックしないよう
-  # continue-on-error にしている。
+  #
+  # Praat の .xcodeproj は Xcode 26 (objectVersion 70) で作られているため、
+  # 古い Xcode を持つランナーでは "future Xcode project file format" エラーになる。
+  # 対策として macos-latest (現時点で macos-15) で最新の Xcode を選び、
+  # それでも開けない場合は project.pbxproj の objectVersion を旧形式に
+  # 書き換える「ダウングレード」フォールバックを試す。
+  # 試行錯誤中なので、失敗しても他ジョブをブロックしない (continue-on-error)。
   # -----------------------------------------------------------
   build-macos:
     needs: prepare
-    runs-on: macos-14
+    runs-on: macos-latest
     continue-on-error: true
     steps:
       - uses: actions/download-artifact@v4
@@ -203,11 +208,22 @@ jobs:
           name: patched-upstream
           path: upstream/
 
+      - name: Select latest Xcode
+        run: |
+          echo "==> Available Xcode versions:"
+          ls /Applications/ | grep -i xcode || true
+          # 最新の Xcode_*.app を選ぶ (バージョン番号でソート)
+          LATEST=$(ls -d /Applications/Xcode_*.app 2>/dev/null | sort -V | tail -1 || true)
+          if [ -z "$LATEST" ]; then
+            LATEST="/Applications/Xcode.app"
+          fi
+          echo "Selecting: $LATEST"
+          sudo xcode-select -s "$LATEST/Contents/Developer"
+
       - name: Show environment
         run: |
           xcodebuild -version
           xcode-select -p
-          ls /Applications/ | grep -i xcode || true
           sw_vers
           uname -a
 
@@ -267,13 +283,46 @@ jobs:
           echo "==> Using project: $PROJ"
 
       - name: Inspect Xcode project
+        id: inspect
         run: |
           PROJ="${{ steps.fetch_xcode.outputs.proj }}"
           echo "==> Project dir contents:"
           ls -la "$PROJ" | head
           echo ""
-          echo "==> xcodebuild -list:"
-          xcodebuild -project "$PROJ" -list
+          echo "==> Project objectVersion:"
+          grep -E "objectVersion\s*=" "$PROJ/project.pbxproj" | head -3 || true
+          echo ""
+          echo "==> Trying xcodebuild -list (this may fail if format is too new):"
+          if xcodebuild -project "$PROJ" -list 2>&1 | tee /tmp/xclist.txt; then
+            echo "needs_downgrade=false" >> "$GITHUB_OUTPUT"
+          else
+            if grep -q "future Xcode project file format" /tmp/xclist.txt; then
+              echo "==> Project is in a future format; will downgrade"
+              echo "needs_downgrade=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "needs_downgrade=false" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Downgrade Xcode project format if needed
+        if: steps.inspect.outputs.needs_downgrade == 'true'
+        run: |
+          PROJ="${{ steps.fetch_xcode.outputs.proj }}"
+          PBX="$PROJ/project.pbxproj"
+          echo "==> Backing up original pbxproj"
+          cp "$PBX" "$PBX.orig"
+          echo "==> Original objectVersion:"
+          grep -E "objectVersion\s*=" "$PBX" | head -3
+          # objectVersion 70 (Xcode 26) → 56 (Xcode 14-15) に落とす
+          # 過激な書き換えだが、ソース・ターゲット情報は維持されることが多い
+          sed -i.bak -E 's/objectVersion = [0-9]+;/objectVersion = 56;/g' "$PBX"
+          rm -f "$PBX.bak"
+          echo ""
+          echo "==> Modified objectVersion:"
+          grep -E "objectVersion\s*=" "$PBX" | head -3
+          echo ""
+          echo "==> Re-trying xcodebuild -list after downgrade:"
+          xcodebuild -project "$PROJ" -list || echo "(still failing — Xcode too old)"
 
       - name: Build Praat (macOS) — try praat_mac first, then fallbacks
         run: |
