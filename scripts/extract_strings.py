@@ -37,11 +37,15 @@ except ImportError:
 # 値が複数あるのは複数の引数を抽出することを意味する。
 MACRO_UI_ARG_POSITIONS: dict[str, tuple[int, ...]] = {
     "praat_addMenuCommand": (1, 2),       # window-id (skip), menu name, label
+    "praat_addFixedButtonCommand": (1,),  # window, label, ...
     "praat_addAction1": (1,),             # class, label
     "praat_addAction2": (2,),
     "praat_addAction3": (3,),
     "praat_addAction4": (4,),
     "Editor_addCommand": (1, 2),          # editor, menu name, label
+    "Editor_addMenu": (0,),               # menu name (e.g. U"File")
+    "GuiMenu_createInWindow": (1,),       # window, title, ...
+    "GuiButton_createShown": (5,),        # parent, left,right,top,bottom, label
     "FORM": (1,),                         # name, dialog title, help page
     "FORM_READ": (1,),
     "FORM_SAVE": (1,),

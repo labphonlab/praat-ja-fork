@@ -1,166 +1,136 @@
-# menus.yaml — Praat メニュー・ダイアログ・フォームの翻訳辞書
-# 対象ファイル: praat/sys/praat_objectMenus.cpp (Objects ウィンドウ周辺)
-#
-# 書式: <英語原文>: <日本語訳>
-# 空文字列 (ja: "") は「未翻訳・原文のまま」を意味する。
-# 末尾の空白・"..." はそのまま日本語訳側でも維持する (Praatが解釈に使う場合がある)。
-#
-# 翻訳方針:
-#   - macOS/Windows のシステム標準訳に揃える (Open=開く, Save=保存, etc.)
-#   - 専門用語 (音韻学・言語学・統計) は学術慣用に従う
-#   - ショートカットを示す末尾の空白 (Close   等) は維持
-#   - "..." はダイアログを開くことを示すので必ず維持
-
-# ========== 内部セクションマーカー ==========
-'-- api --': '-- API --'
-'-- buttons --': '-- ボタン --'
-'-- demo window --': '-- デモウィンドウ --'
-'-- encoding prefs --': '-- 文字コード設定 --'
-'-- manual --': '-- マニュアル --'
-'-- script --': '-- スクリプト --'
+-- api --: -- API --
+-- buttons --: -- ボタン --
+-- demo window --: -- デモウィンドウ --
+-- encoding prefs --: -- 文字コード設定 --
+-- manual --: -- マニュアル --
+-- script --: -- スクリプト --
 ' manual...': ' マニュアル...'
-
-# ========== ファイル・編集系の標準コマンド ==========
 Open: 開く
-'Open Praat notebook...': 'Praatノートブックを開く...'
-'Open Praat script...': 'Praatスクリプトを開く...'
-'New Praat notebook': 新規Praatノートブック
-'New Praat script': 新規Praatスクリプト
-'Read from file...': 'ファイルから読み込む...'
-'Read Object(s) from file': ファイルからオブジェクトを読み込む
-'Save Object(s) as one binary file': オブジェクトを単一バイナリファイルとして保存
-'Save Object(s) as one short text file': オブジェクトを単一の短文テキストファイルとして保存
-'Save Object(s) as one text file': オブジェクトを単一テキストファイルとして保存
-'Save Demo window as PDF file': デモウィンドウをPDFファイルとして保存
-'Save Demo window as PDF file...': 'デモウィンドウをPDFファイルとして保存...'
-'Save all pages as HTML files': 全ページをHTMLファイルとして保存
-'Save manual to HTML folder...': 'マニュアルをHTMLフォルダに保存...'
-
-# 編集メニューの標準項目 (末尾の空白はキーボードショートカット表示用に維持)
-'Copy   ': 'コピー   '
-'Cut   ': '切り取り   '
-'Paste   ': '貼り付け   '
-'Close   ': '閉じる   '
-'Zoom   ': 'ズーム   '
-'Minimize   ': '最小化   '
+Open Praat notebook...: Praatノートブックを開く...
+Open Praat script...: Praatスクリプトを開く...
+New Praat notebook: 新規Praatノートブック
+New Praat script: 新規Praatスクリプト
+Read from file...: ファイルから読み込む...
+Read Object(s) from file: ファイルからオブジェクトを読み込む
+Save Object(s) as one binary file: オブジェクトを単一バイナリファイルとして保存
+Save Object(s) as one short text file: オブジェクトを単一の短文テキストファイルとして保存
+Save Object(s) as one text file: オブジェクトを単一テキストファイルとして保存
+Save Demo window as PDF file: デモウィンドウをPDFファイルとして保存
+Save Demo window as PDF file...: デモウィンドウをPDFファイルとして保存...
+Save all pages as HTML files: 全ページをHTMLファイルとして保存
+Save manual to HTML folder...: マニュアルをHTMLフォルダに保存...
+Copy   : コピー   
+Cut   : 切り取り   
+Paste   : 貼り付け   
+Close   : 閉じる   
+Zoom   : ズーム   
+Minimize   : 最小化   
 'Search ': '検索 '
 Edit: 編集
-'Copy object': オブジェクトをコピー
-'Rename object': オブジェクトの名前を変更
-
-# ========== Praat 固有のメニュー項目 ==========
+Copy object: オブジェクトをコピー
+Rename object: オブジェクトの名前を変更
+Rename...: 名前を変更...
+Copy...: コピー...
+Inspect: 検査
+Info: 情報
+Remove: 削除
+Help: ヘルプ
+New: 新規
+Quit: 終了
+Confirm Quit: 終了確認
 Praat: Praat
 Goodies: 便利な機能
 Technical: 詳細設定
 Settings: 設定
 Window: ウィンドウ
 Calculator: 電卓
-'Calculator...': '電卓...'
-'Buttons...': 'ボタン...'
-
-# メニューコマンドの表示/非表示制御
-'Add menu command': メニューコマンドを追加
-'Add menu command...': 'メニューコマンドを追加...'
-'Hide menu command': メニューコマンドを非表示
-'Hide menu command...': 'メニューコマンドを非表示...'
-'Show menu command': メニューコマンドを表示
-'Show menu command...': 'メニューコマンドを表示...'
-'Add action command': アクションコマンドを追加
-'Add action command...': 'アクションコマンドを追加...'
-'Hide action command': アクションコマンドを非表示
-'Hide action command...': 'アクションコマンドを非表示...'
-'Show action command': アクションコマンドを表示
-'Show action command...': 'アクションコマンドを表示...'
-
-# マニュアル・ヘルプ系
+Calculator...: 電卓...
+Buttons...: ボタン...
+Add menu command: メニューコマンドを追加
+Add menu command...: メニューコマンドを追加...
+Hide menu command: メニューコマンドを非表示
+Hide menu command...: メニューコマンドを非表示...
+Show menu command: メニューコマンドを表示
+Show menu command...: メニューコマンドを表示...
+Add action command: アクションコマンドを追加
+Add action command...: アクションコマンドを追加...
+Hide action command: アクションコマンドを非表示
+Hide action command...: アクションコマンドを非表示...
+Show action command: アクションコマンドを表示
+Show action command...: アクションコマンドを表示...
 ApplicationHelp: アプリケーションヘルプ
-'Search manual': マニュアルを検索
-'Go to manual page': マニュアルページへ移動
-'Go to manual page...': 'マニュアルページへ移動...'
-'Search for strings (separate with spaces)': '文字列を検索 (スペース区切り)'
-'For details, click Help.': '詳細はヘルプをクリック。'
-
-# レポート系
-'List readable types of objects': 読み込み可能なオブジェクト形式の一覧
-'Report app properties': アプリ情報を表示
-'Report system properties': システム情報を表示
-'Report memory use': メモリ使用量を表示
-'Report graphical properties': グラフィック情報を表示
-'Report integer properties': 整数型情報を表示
-'Report floating point properties': 浮動小数点情報を表示
-'Report text properties': テキスト処理情報を表示
-'Report font properties': フォント情報を表示
-'Report difference of two proportions': 2つの比率の差を報告
-'Report difference of two proportions...': '2つの比率の差を報告...'
-
-# デバッグ・トレース
-'Debug multi-threading': マルチスレッドのデバッグ
-'Debug multi-threading...': 'マルチスレッドのデバッグ...'
-'Debug option': デバッグオプション
-'Debug...': 'デバッグ...'
-'Set debugging options': デバッグオプションを設定
-'Trace threads': スレッドをトレース
+Search manual: マニュアルを検索
+Go to manual page: マニュアルページへ移動
+Go to manual page...: マニュアルページへ移動...
+Search for strings (separate with spaces): 文字列を検索 (スペース区切り)
+For details, click Help.: 詳細はヘルプをクリック。
+List readable types of objects: 読み込み可能なオブジェクト形式の一覧
+Report app properties: アプリ情報を表示
+Report system properties: システム情報を表示
+Report memory use: メモリ使用量を表示
+Report graphical properties: グラフィック情報を表示
+Report integer properties: 整数型情報を表示
+Report floating point properties: 浮動小数点情報を表示
+Report text properties: テキスト処理情報を表示
+Report font properties: フォント情報を表示
+Report difference of two proportions: 2つの比率の差を報告
+Report difference of two proportions...: 2つの比率の差を報告...
+Debug multi-threading: マルチスレッドのデバッグ
+Debug multi-threading...: マルチスレッドのデバッグ...
+Debug option: デバッグオプション
+Debug...: デバッグ...
+Set debugging options: デバッグオプションを設定
+Trace threads: スレッドをトレース
 Tracing: トレース
-
-# 設定ダイアログ群
-'CJK font style settings': CJKフォントスタイル設定
-'CJK font style settings... || CJK font style preferences...': 'CJKフォントスタイル設定... || CJKフォントスタイル設定...'
-'Text reading settings': テキスト読み込み設定
-'Text reading settings... || Text reading preferences...': 'テキスト読み込み設定... || テキスト読み込み設定...'
-'Text writing settings': テキスト書き出し設定
-'Text writing settings... || Text writing preferences...': 'テキスト書き出し設定... || テキスト書き出し設定...'
-
-# スレッド設定
-'Maximum number of threads': スレッド数の上限
-'Minimum number of frames per thread': スレッドあたりのフレーム数の下限
-'Use multi-threading': マルチスレッドを使用
-'These settings determine how fast parallelized': 'これらの設定は並列化処理の速度に影響します。'
-'procedures are performed on your computer.': '実行環境での処理速度を決定します。'
-
-# C インターフェース生成
-'Create C interface...': 'Cインターフェースを生成...'
+CJK font style settings: CJKフォントスタイル設定
+CJK font style settings... || CJK font style preferences...: CJKフォントスタイル設定... || CJKフォントスタイル設定...
+Text reading settings: テキスト読み込み設定
+Text reading settings... || Text reading preferences...: テキスト読み込み設定... || テキスト読み込み設定...
+Text writing settings: テキスト書き出し設定
+Text writing settings... || Text writing preferences...: テキスト書き出し設定... || テキスト書き出し設定...
+Maximum number of threads: スレッド数の上限
+Minimum number of frames per thread: スレッドあたりのフレーム数の下限
+Use multi-threading: マルチスレッドを使用
+These settings determine how fast parallelized: これらの設定は並列化処理の速度に影響します。
+procedures are performed on your computer.: 実行環境での処理速度を決定します。
+Create C interface...: Cインターフェースを生成...
 'PraatLib: Create C header or file': 'PraatLib: Cヘッダまたはファイルを生成'
-'Include "Create" API': '"Create" APIを含める'
-'Include "Demo" API': '"Demo" APIを含める'
-'Include "Draw" API': '"Draw" APIを含める'
-'Include "Help" API': '"Help" APIを含める'
-'Include "Modify" API': '"Modify" APIを含める'
-'Include "Play" API': '"Play" APIを含める'
-'Include "Query" API': '"Query" APIを含める'
-'Include "Read" API': '"Read" APIを含める'
-'Include "Record" API': '"Record" APIを含める'
-'Include "Save" API': '"Save" APIを含める'
-'Include "To" API': '"To" APIを含める'
-'Include "Window" API': '"Window" APIを含める'
-'Is in header': ヘッダに含める
-
-# フォームフィールド・ラベル
-'New name': 新しい名前
-'Name of new object': 新規オブジェクトの名前
+Include "Create" API: '"Create" APIを含める'
+Include "Demo" API: '"Demo" APIを含める'
+Include "Draw" API: '"Draw" APIを含める'
+Include "Help" API: '"Help" APIを含める'
+Include "Modify" API: '"Modify" APIを含める'
+Include "Play" API: '"Play" APIを含める'
+Include "Query" API: '"Query" APIを含める'
+Include "Read" API: '"Read" APIを含める'
+Include "Record" API: '"Record" APIを含める'
+Include "Save" API: '"Save" APIを含める'
+Include "To" API: '"To" APIを含める'
+Include "Window" API: '"Window" APIを含める'
+Is in header: ヘッダに含める
+New name: 新しい名前
+Name of new object: 新規オブジェクトの名前
 Command: コマンド
-'After command': コマンドの後ろに
+After command: コマンドの後ろに
 Depth: 深さ
 Menu: メニュー
-'Class 1': クラス1
-'Class 2': クラス2
-'Class 3': クラス3
-'Number 1': 番号1
-'Number 2': 番号2
-'Number 3': 番号3
-'left Row 1': '左 行1'
-'left Row 2': '左 行2'
-'right Row 1': '右 行1'
-'right Row 2': '右 行2'
-
-# Calculator のヘルプ文 (長文の説明)
-'Type any numeric formula or string formula': 任意の数値式または文字列式を入力してください。
-'Note that you can include many special functions in your formula,': 'なお、数式には多くの特殊関数を含めることができます。'
-'including statistical functions and acoustics-auditory conversions.': '統計関数や音響-聴覚変換などが利用可能です。'
-
-# Debug ダイアログの注意文
-'Setting the following to anything other than zero': '以下のオプションをゼロ以外に設定すると'
-'will alter the behaviour of Praat': 'Praat の動作が変化します'
-'in unpredictable ways.': '予期せぬ結果になる場合があります。'
-'If you switch Tracing on, Praat will write lots of detailed ': 'トレースを有効にすると、Praat は詳細な動作ログを書き出します '
-'information about what goes on in Praat': 'Praat 内部の動作情報を '
+Class 1: クラス1
+Class 2: クラス2
+Class 3: クラス3
+Number 1: 番号1
+Number 2: 番号2
+Number 3: 番号3
+left Row 1: 左 行1
+left Row 2: 左 行2
+right Row 1: 右 行1
+right Row 2: 右 行2
+Type any numeric formula or string formula: 任意の数値式または文字列式を入力してください。
+Note that you can include many special functions in your formula,: なお、数式には多くの特殊関数を含めることができます。
+including statistical functions and acoustics-auditory conversions.: 統計関数や音響-聴覚変換などが利用可能です。
+Setting the following to anything other than zero: 以下のオプションをゼロ以外に設定すると
+will alter the behaviour of Praat: Praat の動作が変化します
+in unpredictable ways.: 予期せぬ結果になる場合があります。
+'If you switch Tracing on, Praat will write lots of detailed ': 'トレースを有効にすると、Praat
+  は詳細な動作ログを書き出します '
+information about what goes on in Praat: 'Praat 内部の動作情報を '
 'to ': 'に書き込みます: '
